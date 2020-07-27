@@ -1,0 +1,2 @@
+Prefix plugins/Richness/example
+Plugin Richness inputfile parameters.txt outputfile richness

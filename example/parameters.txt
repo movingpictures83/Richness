@@ -1,0 +1,4 @@
+otufile	plugins/Richness/example/asv_abund.transpose.csv
+mapping	plugins/Richness/example/asv_map.csv
+tree	plugins/Richness/example/asv_tax.csv
+column	Description
