@@ -12,6 +12,7 @@ input <- function(inputfile) {
    tree.path <<- parameters["tree", 2]
    map.path <<- parameters["mapping", 2]
    column <<- parameters["column", 2]
+   measure <<- parameters["measure", 2]
    #HMP <<- import_qiime(otu.path, map.path, tree.path, parseFunction = parse_taxonomy_qiime)
 }
 run <- function() {
@@ -27,13 +28,13 @@ output <- function(outputfile) {
   #height = 10*300); #,)
   print("Generating plot...")
   #result <<- PCoA(physeq)
-  y <- plot_richness(physeq, color=column)
+  y <- plot_richness(physeq, color=column, measures=c(measure))
   #y <- plot_sparsity(p0)
-  #print(str(y))
+  print(str(y))
   print("Generating CSV...")
-  rich <- richness(physeq)
+  #rich <- richness(physeq, index = c("observed", measure))
   #print(str(y$data))
-  write.csv(rich, paste(outputfile,"csv",sep="."))
+  write.csv(y$data, paste(outputfile,"csv",sep="."))
   print(y)#plot_bar(HMP, x="Description", fill=diffcol))
   dev.off()
 }
