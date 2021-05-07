@@ -28,7 +28,12 @@ output <- function(outputfile) {
   #height = 10*300); #,)
   print("Generating plot...")
   #result <<- PCoA(physeq)
-  y <- plot_richness(physeq, color=column, measures=c(measure))
+  if (measure != "All") {
+     y <- plot_richness(physeq, color=column, measures=c(measure))
+  }
+  else {
+     y <- plot_richness(physeq, color=column)
+  }
   #y <- plot_sparsity(p0)
   print(str(y))
   print("Generating CSV...")
