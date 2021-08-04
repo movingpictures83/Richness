@@ -22,6 +22,9 @@ run <- function() {
    physeq <<- read_csv2phyloseq(otu.file=otu.path, taxonomy.file=tree.path, metadata.file=map.path)
    mytree = rtree(ntaxa(physeq), rooted=TRUE, tip.label=taxa_names(physeq))
    physeq <<- merge_phyloseq(physeq, mytree)
+   print(sample_names(otu_table(physeq)) == rownames(sample_data(physeq)))
+   #print(sample_names(otu_table(physeq)))
+   #print(rownames(sample_data(physeq)))
 }
 output <- function(outputfile) {
   pdf(paste(outputfile,"pdf",sep="."))#,  width = 10*300,        # 5 x 300 pixels
@@ -35,10 +38,10 @@ output <- function(outputfile) {
      y <- plot_richness(physeq, color=column)
   }
   #y <- plot_sparsity(p0)
-  print(str(y))
+  #print(str(y))
   print("Generating CSV...")
   #rich <- richness(physeq, index = c("observed", measure))
-  #print(str(y$data))
+  print(str(y$data))
   write.csv(y$data, paste(outputfile,"csv",sep="."))
   print(y)#plot_bar(HMP, x="Description", fill=diffcol))
   dev.off()
