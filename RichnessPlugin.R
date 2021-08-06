@@ -17,6 +17,7 @@ input <- function(inputfile) {
    tree.path <<- paste(pfix, parameters["tree", 2], sep="/")
    map.path <<- paste(pfix, parameters["mapping", 2], sep="/")
    column <<- parameters["column", 2]
+   measure <<- parameters["measure", 2]
    #HMP <<- import_qiime(otu.path, map.path, tree.path, parseFunction = parse_taxonomy_qiime)
 }
 run <- function() {
@@ -26,19 +27,27 @@ run <- function() {
    physeq <<- read_csv2phyloseq(otu.file=otu.path, taxonomy.file=tree.path, metadata.file=map.path)
    mytree = rtree(ntaxa(physeq), rooted=TRUE, tip.label=taxa_names(physeq))
    physeq <<- merge_phyloseq(physeq, mytree)
+   print(sample_names(otu_table(physeq)) == rownames(sample_data(physeq)))
+   #print(sample_names(otu_table(physeq)))
+   #print(rownames(sample_data(physeq)))
 }
 output <- function(outputfile) {
   pdf(paste(outputfile,"pdf",sep="."))#,  width = 10*300,        # 5 x 300 pixels
   #height = 10*300); #,)
   print("Generating plot...")
   #result <<- PCoA(physeq)
-  y <- plot_richness(physeq, color=column)
+  if (measure != "All") {
+     y <- plot_richness(physeq, color=column, measures=c(measure))
+  }
+  else {
+     y <- plot_richness(physeq, color=column)
+  }
   #y <- plot_sparsity(p0)
   #print(str(y))
   print("Generating CSV...")
-  rich <- richness(physeq)
-  #print(str(y$data))
-  write.csv(rich, paste(outputfile,"csv",sep="."))
+  #rich <- richness(physeq, index = c("observed", measure))
+  print(str(y$data))
+  write.csv(y$data, paste(outputfile,"csv",sep="."))
   print(y)#plot_bar(HMP, x="Description", fill=diffcol))
   dev.off()
 }

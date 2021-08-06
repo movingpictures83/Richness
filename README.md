@@ -14,6 +14,7 @@ otufile: OTU abundances (CSV)
 mapping: Mapping table (CSV)
 tree: Phylogenetic tree (CSV)
 column: (STRING)
+measure: (STRING) <- All will do all seven (Observed, Chao1, ACE, Shannon, Simpson, InvSimpson, Fisher)
 
 The plot will then be generated using the provided prefix (prefix.pdf), with a supplemental prefix.csv file containing richness values.
 
